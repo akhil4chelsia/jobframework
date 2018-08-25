@@ -8,6 +8,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import me.akhil.jobframework.dao.DBUtils;
+import me.akhil.jobframework.dao.JobRepository;
+
 @Component
 public class JobScheduler {
 
@@ -19,13 +22,13 @@ public class JobScheduler {
 
 	@Autowired
 	private Executor executor;
-
+		
 	@Scheduled(initialDelay = 500, fixedDelay = 1000)
 	public void scheduleJob() {
 		List<Job> pendingJobs = jobtracker.getPendingJobs();
 		pendingJobs.stream().forEach(job -> {
 			JobProcessor jobProcessor = context.getBean(JobProcessor.class);
-			jobProcessor.setJob(job);
+			jobProcessor.setJob(job);					
 			executor.execute(jobProcessor);
 		});
 	}

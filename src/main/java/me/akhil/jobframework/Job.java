@@ -4,13 +4,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.MapKeyColumn;
+
 import org.springframework.stereotype.Component;
 
 
 @Component
 public abstract class Job {
-	
-	private String jobId;	
+		
+	private String jobId;
 	private JobStatus jobStatus;	
 	private Map<String, String> jobParameters = new HashMap<>();		
 
@@ -51,6 +59,11 @@ public abstract class Job {
 		setJobId(UUID.randomUUID().toString());
 		setJobStatus(JobStatus.PENDING);
 		jobParameters = new HashMap<>();
+	}		
+
+	@Override
+	public String toString() {
+		return "Job [jobId=" + jobId + ", jobStatus=" + jobStatus + ", jobParameters=" + jobParameters + "]";
 	}
 
 	public abstract void process() throws Exception;

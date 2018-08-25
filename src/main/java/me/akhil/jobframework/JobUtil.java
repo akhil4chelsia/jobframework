@@ -1,10 +1,11 @@
 package me.akhil.jobframework;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+
+import me.akhil.jobframework.dao.DBUtils;
+import me.akhil.jobframework.dao.JobRepository;
 
 @Component
 public class JobUtil {
@@ -14,8 +15,12 @@ public class JobUtil {
 
 	@Autowired
 	private ApplicationContext context;
+	
+	@Autowired
+	private JobRepository repo;
 
 	public String submitJob(Job job) {
+		repo.save(DBUtils.getJobDAO(job));
 		return tracker.addToJobQueue(job);
 	}
 

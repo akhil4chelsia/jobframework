@@ -4,6 +4,7 @@ import java.util.concurrent.Executor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -13,8 +14,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 public class App {
 	
 	public static void main(String[] args) {
-		SpringApplication.run(App.class, args);
-		
+		 ConfigurableApplicationContext context = SpringApplication.run(App.class, args);
+		 context.getBean(TestData.class).testJob();
 	}
 	
 	@Bean
